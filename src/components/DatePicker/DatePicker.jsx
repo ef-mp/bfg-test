@@ -13,7 +13,6 @@ export const DatePicker = (props) => {
     <KeyboardDatePicker
       onChange={changeHandler}
       value={date}
-      clearable
       invalidDateMessage="Неверный формат даты"
       variant="inline"
       format="mm.dd.yy"

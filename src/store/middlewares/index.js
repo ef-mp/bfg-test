@@ -1,1 +1,3 @@
-export const middlewares = []
+import { apiMiddleware } from "./apiMiddleware/apiMiddleware"
+
+export const middlewares = [apiMiddleware]
