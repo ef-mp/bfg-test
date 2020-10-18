@@ -1,0 +1,17 @@
+.drop-down {
+  &__wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .2s linear;
+  }
+  &__content {
+    padding: 10px;
+    transition: opacity .2s linear, transform .2s linear;
+    opacity: 0;
+    transform: scale(.8);
+    &_open {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}

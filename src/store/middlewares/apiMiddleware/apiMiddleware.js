@@ -13,6 +13,7 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     const {
       apiMethod, // функция запроса из API
       entity, // имя сущности, например [user], [cart] и т.д.
+      dataTransformer, // фннкция для трансформации данных
     } = action.payload.meta
 
     const { data } = action.payload // body запроса
@@ -21,7 +22,11 @@ export const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     apiMethod(data)
       .then((response) => {
         // запрос успешно завёршен, тут пердача данных в reducer
-        dispatch(apiSuccess(response.data, entity))
+        const transformedData = dataTransformer
+          ? dataTransformer(response.data)
+          : response.data
+
+        dispatch(apiSuccess(transformedData, entity))
         // используется для отображения состояния "loading"
         dispatch(apiFetching(entity, false))
       })

@@ -22,10 +22,10 @@ export const apiFetching = (entity, isFetching) => ({
   },
 })
 
-export const apiSuccess = (response, entity) => ({
+export const apiSuccess = (data, entity) => ({
   type: `${entity} ${API_SUCCESS}`,
   payload: {
-    data: response.data,
+    data,
     meta: { entity },
   },
 })

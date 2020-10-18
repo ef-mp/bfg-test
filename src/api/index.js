@@ -1,9 +1,11 @@
 import { fetcher } from "./fetcher"
 
 export const api = {
-  fetchQuestions: async () =>
+  fetchQuestions: async ({ fromDate, order, sort, query }) =>
     fetcher(
-      "search?fromdate=1602633600&order=desc&sort=votes&intitle=react-redux&site=stackoverflow",
+      `search?fromdate=${
+        fromDate / 1000
+      }&order=${order}&sort=${sort}&intitle=${query}&pagesize=5`,
       "get"
     ),
 }

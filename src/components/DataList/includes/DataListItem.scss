@@ -1,0 +1,14 @@
+.data-list-item {
+  &__root {
+    padding-right: 80px !important;
+  }
+  &__button {
+    transition: transform .1s linear;
+    &:active {
+      transform: scale(.9);
+    }
+  }
+  &__highlight {
+    background: rgba(80, 196, 27, 0.2) !important;
+  }
+}

@@ -1,0 +1,41 @@
+.loader {
+  &_loading {
+    opacity: .8;
+    filter: blur(1px);
+    transition: filter .3s, opacity .3s;
+    animation: Loading 1.5s ease-in infinite;
+    pointer-events: none;
+  }
+  &__icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+  }
+  &__icon {
+    width: 40px;
+    height: 40px;
+    animation: FirstLoading 1s linear infinite;
+  }
+}
+
+@keyframes FirstLoading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes Loading {
+  0% {
+    opacity: .8;
+  }
+  50% {
+    opacity: .4;
+  }
+  100% {
+    opacity: .8;
+  }
+}

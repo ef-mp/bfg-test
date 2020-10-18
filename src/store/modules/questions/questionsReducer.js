@@ -1,8 +1,15 @@
-import { QUESTIONS } from "./actions"
-import { API_REQUEST, API_SUCCESS } from "../api/actions"
+import {
+  QUESTIONS,
+  QUESTIONS_DECREMENT_SCORE,
+  QUESTIONS_INCREMENT_SCORE,
+} from "./actions"
+import { API_FETCHING, API_SUCCESS } from "../api/actions"
+import { changeRating } from "../../../functions/reducersFunctions/changeRating"
 
 const initialState = {
-  data: null,
+  loading: false,
+  error: false,
+  data: [],
 }
 
 export const questionsReducer = (state = initialState, action) => {
@@ -12,6 +19,19 @@ export const questionsReducer = (state = initialState, action) => {
         ...state,
         data: action.payload.data,
       }
+
+    case QUESTIONS_INCREMENT_SCORE:
+      return changeRating(state, "data", action, 1)
+
+    case QUESTIONS_DECREMENT_SCORE:
+      return changeRating(state, "data", action, -1)
+
+    case `${QUESTIONS} ${API_FETCHING}`:
+      return {
+        ...state,
+        loading: action.payload.data,
+      }
+
     default:
       return state
   }

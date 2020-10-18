@@ -1,19 +1,18 @@
 import React, { useEffect } from "react"
-import Container from "@material-ui/core/Container"
-import { useDispatch } from "react-redux"
-import { DatePicker } from "./components/DatePicker/DatePicker"
-import { fetchQuestions } from "./store/modules/questions/actions"
+import Box from "@material-ui/core/Box"
+import { QuestionsListContainer } from "./containers/QuestionsListContainer"
+import { DateSearchContainer } from "./containers/DateSearchContainer"
+import { Layout } from "./components/Layout/Layout"
 
 function App() {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchQuestions())
-  }, [dispatch])
   return (
     <div className="App">
-      <Container maxWidth="sm">
-        <DatePicker />
-      </Container>
+      <Layout>
+        <Box mb={4}>
+          <DateSearchContainer />
+        </Box>
+        <QuestionsListContainer />
+      </Layout>
     </div>
   )
 }

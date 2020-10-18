@@ -1,0 +1,9 @@
+.author-card__title {
+  transition: opacity .2s;
+  &:hover {
+    opacity: .7;
+  }
+  &:active {
+    opacity: .9;
+  }
+}
