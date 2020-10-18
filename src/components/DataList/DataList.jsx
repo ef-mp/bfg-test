@@ -3,26 +3,27 @@ import PropTypes from "prop-types"
 
 import { ClickAwayListener, List, Paper } from "@material-ui/core"
 import Fade from "@material-ui/core/Fade"
-import { DataListItem } from "./includes/DataListItem"
+import { DataListItem } from "./includes/DataListItem/DataListItem"
 import { DropDown } from "../DropDown/DropDown"
 import { useDropDown } from "../../hooks/useDropDown"
 import { AuthorCard } from "../AuthorCard/AuthorCard"
+import { DropTarget } from "./includes/DropTarget/DropTarget"
 
 export const DataList = (props) => {
-  const { items = [], onIncrementClick, onDecrementClick } = props
-
-  const decrementClickHandler = (itemIndex) => {
-    onDecrementClick(itemIndex)
-  }
-  const incrementClickHandler = (itemIndex) => {
-    onIncrementClick(itemIndex)
-  }
+  const { items = [], onIncrement, onDecrement, onDragEnd } = props
 
   const [activeItem, dropDownClickHandler, clickAwayHandler] = useDropDown()
 
+  const decrementClickHandler = (itemIndex) => {
+    onDecrement(itemIndex)
+  }
+  const incrementClickHandler = (itemIndex) => {
+    onIncrement(itemIndex)
+  }
+
   return (
     <ClickAwayListener onClickAway={clickAwayHandler}>
-      <Fade in={items.length} timeout={300}>
+      <Fade in={!!items.length} timeout={300}>
         <Paper>
           <List component="nav">
             {items.map(
@@ -44,20 +45,25 @@ export const DataList = (props) => {
                   onClick={() => dropDownClickHandler(index)}
                   head={
                     // всегда видная часть drop-down
-                    <DataListItem
-                      highlight={isAnswered}
-                      title={title}
-                      score={score}
-                      image={owner.profileImage}
-                      onIncrementClick={() => incrementClickHandler(index)}
-                      onDecrementClick={() => decrementClickHandler(index)}
-                    />
+                    <DropTarget id={questionId}>
+                      <DataListItem
+                        highlight={isAnswered}
+                        title={title}
+                        score={score}
+                        id={questionId}
+                        image={owner.profileImage}
+                        onIncrement={() => incrementClickHandler(index)}
+                        onDecrement={() => decrementClickHandler(index)}
+                        onDragEnd={onDragEnd}
+                      />
+                    </DropTarget>
                   }
                   content={
                     // открывающаяся часть drop-down
                     <AuthorCard
                       postLink={postLink}
                       owner={owner}
+                      open={activeItem === index}
                       viewCount={viewCount}
                     />
                   }
@@ -83,6 +89,7 @@ DataList.propTypes = {
       isAnswered: PropTypes.bool,
     })
   ).isRequired,
-  onIncrementClick: PropTypes.func.isRequired,
-  onDecrementClick: PropTypes.func.isRequired,
+  onIncrement: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
+  onDragEnd: PropTypes.func.isRequired,
 }

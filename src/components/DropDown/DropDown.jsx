@@ -19,12 +19,7 @@ export const DropDown = (props) => {
 
   return (
     <div className="drop-down" ref={rootRef}>
-      <div
-        tabIndex={-1}
-        onClick={clickHandler}
-        className="drop-down__header"
-        role="button"
-      >
+      <div onClick={clickHandler} className="drop-down__header">
         {head}
       </div>
       <div style={styles} className="drop-down__wrapper">

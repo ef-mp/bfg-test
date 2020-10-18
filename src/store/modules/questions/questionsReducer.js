@@ -2,9 +2,13 @@ import {
   QUESTIONS,
   QUESTIONS_DECREMENT_SCORE,
   QUESTIONS_INCREMENT_SCORE,
+  QUESTIONS_REPLACE,
 } from "./actions"
 import { API_FETCHING, API_SUCCESS } from "../api/actions"
-import { changeRating } from "../../../functions/reducersFunctions/changeRating"
+import {
+  changeRating,
+  replaceItems,
+} from "../../../functions/reducersFunctions/changeRating"
 
 const initialState = {
   loading: false,
@@ -30,6 +34,16 @@ export const questionsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload.data,
+      }
+
+    case QUESTIONS_REPLACE:
+      return {
+        ...state,
+        data: replaceItems(
+          state.data,
+          action.payload.data.firstId,
+          action.payload.data.secondId
+        ),
       }
 
     default:

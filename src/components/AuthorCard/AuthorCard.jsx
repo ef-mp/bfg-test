@@ -1,5 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types"
+import PropTypes, { bool } from "prop-types"
 import { Paper } from "@material-ui/core"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
@@ -9,6 +9,7 @@ export const AuthorCard = (props) => {
   const {
     owner: { displayName, link, reputation },
     viewCount,
+    open = false, // для корректоно tabindex
     postLink,
   } = props
 
@@ -17,6 +18,7 @@ export const AuthorCard = (props) => {
       <Box p="20px">
         <Box display="flex" mb={1}>
           <Typography
+            tabIndex={open ? 0 : -1}
             variant="h5"
             component="a"
             color="primary"
@@ -44,6 +46,7 @@ export const AuthorCard = (props) => {
 
         <Box display="flex" mt={1}>
           <Button
+            tabIndex={open ? 0 : -1}
             variant="outlined"
             color="primary"
             href={postLink}
@@ -66,5 +69,10 @@ AuthorCard.propTypes = {
     link: PropTypes.string.isRequired,
   }).isRequired,
   viewCount: PropTypes.number.isRequired,
+  open: PropTypes.bool,
   postLink: PropTypes.string.isRequired,
+}
+
+AuthorCard.defaultProps = {
+  open: bool,
 }

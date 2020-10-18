@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { KeyboardDatePicker } from "@material-ui/pickers"
+import React, { useState } from "react"
+import { DatePicker } from "@material-ui/pickers"
 import PropTypes from "prop-types"
 
-export const DatePicker = (props) => {
-  const { onChange, initialDate, maxDate = new Date(), helperText } = props
+export const AppDatePicker = (props) => {
+  const { onChange, initialDate } = props
   const [date, setDate] = useState(initialDate)
   const [startDate, setStartDate] = useState(null)
 
@@ -16,38 +16,31 @@ export const DatePicker = (props) => {
   }
 
   const closeHandler = () => {
-    if (startDate.toDateString() !== date.toDateString()) {
+    if (date && startDate.toDateString() !== date.toDateString()) {
       onChange(date)
     }
   }
 
   return (
-    <KeyboardDatePicker
+    <DatePicker
       onChange={changeHandler}
       onClose={closeHandler}
       onOpen={openHandler}
-      autoOk={false}
       value={date}
-      maxDate={maxDate}
+      minDate="01.01.1900"
+      views={["date"]}
       inputVariant="outlined"
       variant="inline"
       size="small"
-      invalidDateMessage="Неверный формат даты"
-      maxDateMessage="Дата не может быть больше текущей"
-      helperText={helperText}
+      disableFuture
       format="dd.MM.yy"
-      KeyboardButtonProps={{
-        "aria-label": "change date",
-      }}
     />
   )
 }
 
-DatePicker.propTypes = {
+AppDatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   initialDate: PropTypes.instanceOf(Date).isRequired,
-  maxDate: PropTypes.instanceOf(Date),
-  helperText: PropTypes.string.isRequired,
 }
 
 DatePicker.defaultProps = {

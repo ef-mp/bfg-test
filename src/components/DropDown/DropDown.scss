@@ -4,6 +4,23 @@
     overflow: hidden;
     transition: max-height .2s linear;
   }
+  &__header {
+    outline: 0;
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    &:hover {
+      background-color: #efefef !important;
+    }
+    &:active {
+      background-color: #d9d9d9 !important;
+    }
+    &:focus {
+      background-color: #d9d9d9;
+    }
+  }
   &__content {
     padding: 10px;
     transition: opacity .2s linear, transform .2s linear;

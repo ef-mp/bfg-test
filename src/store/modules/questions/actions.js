@@ -33,3 +33,14 @@ export const questionsDecrementScore = (itemIndex) => ({
   type: QUESTIONS_DECREMENT_SCORE,
   payload: { itemIndex },
 })
+
+export const QUESTIONS_REPLACE = `${QUESTIONS} REPLACE`
+export const replaceQuestions = ({ firstId, secondId }) => ({
+  type: QUESTIONS_REPLACE,
+  payload: {
+    data: {
+      firstId,
+      secondId,
+    },
+  },
+})

@@ -23,7 +23,7 @@ export const Loader = (props) => {
 }
 
 Loader.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.element.isRequired,
   loading: PropTypes.bool.isRequired,
   firstLoading: PropTypes.bool.isRequired,
 }

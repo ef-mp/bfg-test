@@ -4,6 +4,7 @@ import {
   fetchQuestions,
   questionsDecrementScore,
   questionsIncrementScore,
+  replaceQuestions,
 } from "../store/modules/questions/actions"
 import { DataList } from "../components/DataList/DataList"
 import { Loader } from "../components/Loader/Loader"
@@ -24,13 +25,23 @@ export const QuestionsListContainer = () => {
     dispatch(questionsDecrementScore(index))
   }
 
+  const dragEndHandler = (item, dropTarget) => {
+    dispatch(
+      replaceQuestions({
+        firstId: item.id,
+        secondId: dropTarget.id,
+      })
+    )
+  }
+
   return (
     <>
       {/* при первой загрузке отображается спиннер, при последующих контент становится полупрозрачным с пульсирующей анимацией */}
       <Loader firstLoading={!data.length && loading} loading={loading}>
         <DataList
-          onIncrementClick={incrementClickHandler}
-          onDecrementClick={decrementClickHandler}
+          onDragEnd={dragEndHandler}
+          onIncrement={incrementClickHandler}
+          onDecrement={decrementClickHandler}
           items={data}
           loading={loading}
         />

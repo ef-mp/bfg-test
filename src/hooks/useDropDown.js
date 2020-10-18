@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 export const useDropDown = () => {
   const [activeItem, setActiveItem] = useState(null)
+
   const clickHandler = (index) => {
     if (index === activeItem) {
       setActiveItem(null)
