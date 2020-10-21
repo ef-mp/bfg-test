@@ -7,7 +7,6 @@ export const transformQuestions = (data) => {
       score,
       title,
       link: postLink,
-      creation_date: creationDate,
       owner: {
         display_name: displayName,
         profile_image: profileImage,
@@ -21,7 +20,6 @@ export const transformQuestions = (data) => {
       viewCount,
       score,
       title,
-      creationDate,
       postLink,
       owner: {
         displayName,

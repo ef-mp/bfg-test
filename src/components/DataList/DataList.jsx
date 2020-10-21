@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback, useState } from "react"
 import PropTypes from "prop-types"
 
 import { ClickAwayListener, List, Paper } from "@material-ui/core"
@@ -7,25 +7,76 @@ import { DataListItem } from "./includes/DataListItem/DataListItem"
 import { DropDown } from "../DropDown/DropDown"
 import { useDropDown } from "../../hooks/useDropDown"
 import { AuthorCard } from "../AuthorCard/AuthorCard"
-import { DropTarget } from "./includes/DropTarget/DropTarget"
+import { DropTarget } from "../DropTarget/DropTarget"
+import { useEscape } from "../../hooks/useEscape"
 
 export const DataList = (props) => {
-  const { items = [], onIncrement, onDecrement, onDragEnd } = props
+  const {
+    items = [],
+    onIncrement,
+    onDecrement,
+    onDragEnd,
+    onDoubleClick,
+    onItemKeyDown,
+  } = props
 
-  const [activeItem, dropDownClickHandler, clickAwayHandler] = useDropDown()
+  const [selected, setSelected] = useState({
+    firstId: "",
+    secondId: "",
+  })
 
-  const decrementClickHandler = (itemIndex) => {
-    onDecrement(itemIndex)
-  }
-  const incrementClickHandler = (itemIndex) => {
-    onIncrement(itemIndex)
-  }
+  const [
+    activeItem,
+    dropDownClickHandler,
+    dropDownClickAway,
+    dblClickHandler,
+  ] = useDropDown()
+
+  useEscape(() => {
+    setSelected({ firstId: "", secondId: "" })
+  })
+  useEscape(dropDownClickAway)
+
+  const decrementClickHandler = useCallback(
+    (itemIndex) => {
+      onDecrement(itemIndex)
+    },
+    [onDecrement]
+  )
+  const incrementClickHandler = useCallback(
+    (itemIndex) => {
+      onIncrement(itemIndex)
+    },
+    [onIncrement]
+  )
+
+  const doubleClickHandler = useCallback(
+    (id) => {
+      dblClickHandler()
+      let tmpState = {}
+      if (selected.firstId) {
+        tmpState = { ...selected, secondId: id }
+        onDoubleClick(tmpState)
+        setSelected(tmpState)
+        // setTimeout для анимации меняющихся менстами элементов
+        setTimeout(() => setSelected({ firstId: "", secondId: "" }), 200)
+      } else {
+        setSelected({ ...selected, firstId: id })
+      }
+    },
+    [dblClickHandler, onDoubleClick, selected]
+  )
+
+  const clickAwayHandler = useCallback(() => {
+    dropDownClickAway()
+    setSelected({ ...selected, firstId: "", secondId: "" })
+  }, [dropDownClickAway, selected])
 
   return (
     <ClickAwayListener onClickAway={clickAwayHandler}>
       <Fade in={!!items.length} timeout={300}>
         <Paper>
-          <List component="nav">
+          <List component="ul">
             {items.map(
               (
                 {
@@ -39,35 +90,43 @@ export const DataList = (props) => {
                 },
                 index
               ) => (
-                <DropDown
-                  key={questionId}
-                  show={activeItem === index}
-                  onClick={() => dropDownClickHandler(index)}
-                  head={
-                    // всегда видная часть drop-down
-                    <DropTarget id={questionId}>
-                      <DataListItem
-                        highlight={isAnswered}
-                        title={title}
-                        score={score}
-                        id={questionId}
-                        image={owner.profileImage}
-                        onIncrement={() => incrementClickHandler(index)}
-                        onDecrement={() => decrementClickHandler(index)}
-                        onDragEnd={onDragEnd}
-                      />
-                    </DropTarget>
-                  }
-                  content={
-                    // открывающаяся часть drop-down
-                    <AuthorCard
-                      postLink={postLink}
-                      owner={owner}
-                      open={activeItem === index}
-                      viewCount={viewCount}
+                <DropTarget key={questionId} id={questionId}>
+                  {(canDrop) => (
+                    <DropDown
+                      show={activeItem === index}
+                      onClick={() => dropDownClickHandler(index)}
+                      onDoubleClick={() => doubleClickHandler(questionId)}
+                      onShiftKeyDown={(e) => onItemKeyDown(e, index)}
+                      head={
+                        // всегда видная часть drop-down
+                        <DataListItem
+                          isAnswered={isAnswered}
+                          highlight={
+                            questionId === selected.firstId ||
+                            questionId === selected.secondId ||
+                            canDrop
+                          }
+                          title={title}
+                          score={score}
+                          id={questionId}
+                          image={owner.profileImage}
+                          onIncrement={() => incrementClickHandler(index)}
+                          onDecrement={() => decrementClickHandler(index)}
+                          onDragEnd={onDragEnd}
+                        />
+                      }
+                      content={
+                        // открывающаяся часть drop-down
+                        <AuthorCard
+                          postLink={postLink}
+                          owner={owner}
+                          open={activeItem === index}
+                          viewCount={viewCount}
+                        />
+                      }
                     />
-                  }
-                />
+                  )}
+                </DropTarget>
               )
             )}
           </List>
@@ -79,7 +138,7 @@ export const DataList = (props) => {
 
 DataList.propTypes = {
   items: PropTypes.arrayOf(
-    PropTypes.shape({
+    PropTypes.exact({
       questionId: PropTypes.number,
       title: PropTypes.string,
       score: PropTypes.number,
@@ -92,4 +151,6 @@ DataList.propTypes = {
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
   onDragEnd: PropTypes.func.isRequired,
+  onDoubleClick: PropTypes.func.isRequired,
+  onItemKeyDown: PropTypes.func.isRequired,
 }

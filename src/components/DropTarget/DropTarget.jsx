@@ -2,7 +2,7 @@ import React from "react"
 import { useDrop } from "react-dnd"
 import PropTypes from "prop-types"
 import Box from "@material-ui/core/Box"
-import { dndTypes } from "../../../../constants/dndTypes"
+import { dndTypes } from "../../constants/dndTypes"
 
 export const DropTarget = (props) => {
   const { id, children } = props
@@ -15,21 +15,16 @@ export const DropTarget = (props) => {
     }),
   })
 
+  const getCanDrop = () => canDrop && isOver
+
   return (
     <div ref={drop}>
-      <Box
-        style={{
-          outline: canDrop && isOver && "2px solid #3f51b5",
-          pointerEvents: canDrop && isOver && "none",
-        }}
-      >
-        {children}
-      </Box>
+      <Box>{() => children(getCanDrop())}</Box>
     </div>
   )
 }
 
 DropTarget.propTypes = {
   id: PropTypes.number.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.func.isRequired,
 }

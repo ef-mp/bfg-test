@@ -1,9 +1,18 @@
 import React from "react"
-import PropTypes, { bool } from "prop-types"
+import PropTypes from "prop-types"
 import { Paper } from "@material-ui/core"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+
+const RenderStats = ({ title, amount }) => (
+  <Box display="flex" mb={1}>
+    <Box mr="4px">
+      <Typography variant="body2">{title}</Typography>
+    </Box>
+    <Typography variant="subtitle2">{amount}</Typography>
+  </Box>
+)
 
 export const AuthorCard = (props) => {
   const {
@@ -30,19 +39,8 @@ export const AuthorCard = (props) => {
           </Typography>
         </Box>
 
-        <Box display="flex" mb={1}>
-          <Box mr="4px">
-            <Typography variant="body2">Репутация: </Typography>
-          </Box>
-          <Typography variant="subtitle2">{reputation}</Typography>
-        </Box>
-
-        <Box display="flex" mb={1}>
-          <Box mr="4px">
-            <Typography variant="body2">Количество просмотров: </Typography>
-          </Box>
-          <Typography variant="subtitle2">{viewCount}</Typography>
-        </Box>
+        <RenderStats title="Количество проспотров" amount={viewCount} />
+        <RenderStats title="Репутация" amount={reputation} />
 
         <Box display="flex" mt={1}>
           <Button
@@ -74,5 +72,10 @@ AuthorCard.propTypes = {
 }
 
 AuthorCard.defaultProps = {
-  open: bool,
+  open: false,
+}
+
+RenderStats.propTypes = {
+  title: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
 }

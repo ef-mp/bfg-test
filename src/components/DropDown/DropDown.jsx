@@ -2,26 +2,35 @@ import React, { useEffect, useRef, useState } from "react"
 import PropTypes from "prop-types"
 
 export const DropDown = (props) => {
-  const { head, content, show, onClick } = props
+  const { head, content, show, onDoubleClick, onClick, onShiftKeyDown } = props
 
   const [styles, setStyles] = useState({ maxHeight: "" })
   const rootRef = useRef()
   const contentRef = useRef()
-
-  const clickHandler = () => {
-    onClick()
-  }
 
   useEffect(() => {
     const contentHeight = contentRef.current.clientHeight
     setStyles({ maxHeight: show ? `${contentHeight}px` : "" })
   }, [show])
 
+  const keyDownHandler = (e) => {
+    if (e.key === "Enter") {
+      onClick()
+    }
+    onShiftKeyDown(e)
+  }
+
   return (
-    <div className="drop-down" ref={rootRef}>
-      <div onClick={clickHandler} className="drop-down__header">
-        {head}
-      </div>
+    <div
+      onDoubleClick={onDoubleClick}
+      onClick={onClick}
+      onKeyDown={keyDownHandler}
+      className="drop-down"
+      role="button"
+      tabIndex={0}
+      ref={rootRef}
+    >
+      <div className="drop-down__header">{head}</div>
       <div style={styles} className="drop-down__wrapper">
         <div
           ref={contentRef}
@@ -40,5 +49,7 @@ DropDown.propTypes = {
   head: PropTypes.element.isRequired,
   content: PropTypes.element.isRequired,
   show: PropTypes.bool.isRequired,
+  onDoubleClick: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  onShiftKeyDown: PropTypes.func.isRequired,
 }

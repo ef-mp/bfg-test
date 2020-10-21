@@ -44,3 +44,19 @@ export const replaceQuestions = ({ firstId, secondId }) => ({
     },
   },
 })
+
+export const QUESTIONS_SHIFT_UP = `${QUESTIONS} SHIFT_UP`
+export const questionsShiftUp = (index) => ({
+  type: QUESTIONS_SHIFT_UP,
+  payload: {
+    data: index,
+  },
+})
+
+export const QUESTIONS_SHIFT_DOWN = `${QUESTIONS} SHIFT_DOWN`
+export const questionsShiftDown = (index) => ({
+  type: QUESTIONS_SHIFT_DOWN,
+  payload: {
+    data: index,
+  },
+})

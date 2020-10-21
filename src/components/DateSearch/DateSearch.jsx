@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import Button from "@material-ui/core/Button"
 import PropTypes from "prop-types"
 import Grid from "@material-ui/core/Grid"
 import Fade from "@material-ui/core/Fade"
-import { AppDatePicker, DatePicker } from "../DatePicker/DatePicker"
+import { AppDatePicker } from "../DatePicker/DatePicker"
 
 export const DateSearch = (props) => {
   const { onSearch, initialDate } = props

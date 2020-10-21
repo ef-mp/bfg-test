@@ -19,8 +19,9 @@ export const DataListItem = (props) => {
     score,
     onIncrement,
     onDecrement,
-    highlight,
+    isAnswered,
     onDragEnd,
+    highlight,
     id,
   } = props
 
@@ -40,8 +41,11 @@ export const DataListItem = (props) => {
   return (
     <Box
       borderLeft={4}
-      borderColor={highlight ? "success.main" : ""}
-      className={isDragging ? "data-list-item_is-dragging" : ""}
+      borderColor={isAnswered ? "success.main" : "transparent"}
+      className={[
+        highlight || isDragging ? "data-list-item_highlight" : "",
+        "data-list-item",
+      ].join(" ")}
       ref={dragRef}
     >
       <ListItem classes={{ root: "data-list-item__root" }}>
@@ -66,12 +70,18 @@ export const DataListItem = (props) => {
 }
 
 DataListItem.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   title: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
-  highlight: PropTypes.bool.isRequired,
+  isAnswered: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
   onDragEnd: PropTypes.func.isRequired,
+  highlight: PropTypes.bool.isRequired,
+}
+
+DataListItem.defaultProps = {
+  image:
+    "https://www.materialui.co/materialIcons/social/person_black_216x216.png",
 }

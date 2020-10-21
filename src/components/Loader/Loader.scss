@@ -11,11 +11,12 @@
     align-items: center;
     justify-content: center;
     min-height: 280px;
+    fill: #3f51b5;
   }
   &__icon {
     width: 40px;
     height: 40px;
-    animation: FirstLoading 1s linear infinite;
+    animation: FirstLoading .7s linear infinite;
   }
 }
 
