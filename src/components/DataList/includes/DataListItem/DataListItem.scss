@@ -3,12 +3,6 @@
   &__root {
     padding-right: 80px !important;
     cursor: pointer;
-    //&:hover {
-    //  background: #efefef !important;
-    //}
-    //&:active {
-    //  background: #d9d9d9 !important;
-    //}
   }
   &__button {
     transition: transform .1s linear;
@@ -19,6 +13,6 @@
   &_highlight {
     opacity: .5;
     transform: scale(.98);
-    box-shadow: 0 0 0 2px #3f51b5;
+    box-shadow: 0 0 0 2px var(--accent);
   }
 }

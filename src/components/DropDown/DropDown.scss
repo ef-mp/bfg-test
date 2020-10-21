@@ -1,18 +1,13 @@
 .drop-down {
   transition: background-color .2s;
   &:hover {
-    background-color: #efefef !important;
-    & .data-list-item__button & {
-      & {
-        background: wheat;
-      }
-    }
+    background-color: var(--hover) !important;
   }
   &:active:not(.data-list-item__button) {
-    background-color: #d9d9d9 !important;
+    background-color: var(--active) !important;
   }
   &:focus {
-    background-color: #e2e2e2;
+    background-color: var(--focus);
     outline: none;
   }
   &__wrapper {

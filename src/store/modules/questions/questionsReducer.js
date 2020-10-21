@@ -7,14 +7,12 @@ import {
   QUESTIONS_SHIFT_UP,
 } from "./actions"
 import { API_FETCHING, API_SUCCESS } from "../api/actions"
-import {
-  changeRating,
-  replaceItems,
-} from "../../../functions/reducersFunctions/changeRating"
+import { changeRating } from "../../../functions/reducersFunctions/changeRating"
 import {
   shiftItemDown,
   shiftItemUp,
 } from "../../../functions/reducersFunctions/shiftListItesm"
+import { replaceItems } from "../../../functions/reducersFunctions/replaceItems"
 
 const initialState = {
   loading: false,

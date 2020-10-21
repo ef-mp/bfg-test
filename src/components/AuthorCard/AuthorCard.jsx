@@ -39,8 +39,8 @@ export const AuthorCard = (props) => {
           </Typography>
         </Box>
 
-        <RenderStats title="Количество проспотров" amount={viewCount} />
-        <RenderStats title="Репутация" amount={reputation} />
+        <RenderStats title="Количество просмотров:" amount={viewCount} />
+        <RenderStats title="Репутация:" amount={reputation} />
 
         <Box display="flex" mt={1}>
           <Button

@@ -24,7 +24,7 @@ export const DataList = (props) => {
     firstId: "",
     secondId: "",
   })
-
+  // возвращает переменную текущего открытого элемента и клик хендлеры
   const [
     activeItem,
     dropDownClickHandler,
