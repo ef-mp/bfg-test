@@ -18,7 +18,7 @@ export const AuthorCard = (props) => {
   const {
     owner: { displayName, link, reputation },
     viewCount,
-    open = false, // для корректоно tabindex
+    open = false, // для корректного tabindex
     postLink,
   } = props
 
